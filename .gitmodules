@@ -1,0 +1,27 @@
+[submodule "build-d"]
+	path = build-d
+	url = https://github.com/lework/Docker-build-d.git
+[submodule "php-fpm"]
+	path = php-fpm
+	url = https://github.com/lework/Docker-php-fpm.git
+[submodule "oraclejdk"]
+	path = oraclejdk
+	url = https://github.com/lework/Docker-oraclejdk.git
+[submodule "activemq"]
+	path = activemq
+	url = https://github.com/lework/Docker-activemq.git
+[submodule "easy-mock"]
+	path = easy-mock
+	url = https://github.com/lework/Docker-easy-mock.git
+[submodule "logio"]
+	path = logio
+	url = https://github.com/lework/Docker-logio.git
+[submodule "tomcat"]
+	path = tomcat
+	url = https://github.com/lework/Docker-tomcat.git
+[submodule "alpine-glibc"]
+	path = alpine-glibc
+	url = https://github.com/lework/Docker-alpine-glibc.git
+[submodule "keepalived"]
+	path = keepalived
+	url = https://github.com/lework/Docker-keepalived.git
