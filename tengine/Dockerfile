@@ -125,7 +125,6 @@ COPY --from=build /var/log/nginx /var/log/nginx
 RUN apk add --no-cache --virtual .gettext gettext \
      && mv /usr/bin/envsubst /tmp/ \
      && runDeps="$( \
-     && runDeps="$( \
              scanelf --needed --nobanner --format '%n#p' /usr/sbin/nginx /usr/lib/nginx/modules/*.so /tmp/envsubst \
                      | tr ',' '\n' \
                      | sort -u \
