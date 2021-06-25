@@ -135,7 +135,7 @@ RUN apk add --no-cache --virtual .gettext gettext \
      && apk add --no-cache --virtual .nginx-rundeps $runDeps \
      && apk del .gettext \
      && mv /tmp/envsubst /usr/local/bin/ \
-     && ln -sf /dev/stdout /var/log/nginx/access.log  \
+     && ln -sf /dev/stdout /var/log/nginx/access.log \
      && ln -sf /dev/stderr /var/log/nginx/error.log
 
 WORKDIR /etc/nginx
