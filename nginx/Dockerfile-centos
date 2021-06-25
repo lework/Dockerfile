@@ -1,0 +1,56 @@
+FROM centos:8.2.2004 as build
+ENV NGINX_VERSION 1.18.0 
+
+RUN dnf install -y gcc gcc-c++ make wget \
+    openssl-devel pcre-devel gd-devel zlib-devel \
+    && wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
+    && tar zxf nginx-${NGINX_VERSION}.tar.gz \
+    && cd nginx-${NGINX_VERSION} \
+    && ./configure --prefix=/usr/local/nginx \
+            --user=nobody \
+            --group=nobody \
+            --with-http_stub_status_module \
+            --with-http_ssl_module \
+            --with-threads \
+            --with-http_v2_module \
+            --with-http_realip_module \
+            --with-http_image_filter_module \
+            --with-http_sub_module \
+            --with-http_dav_module \
+            --with-http_gunzip_module \
+            --with-http_gzip_static_module \
+            --with-http_secure_link_module \
+            --with-http_addition_module \
+            --with-stream \
+            --with-stream_ssl_module \
+            --with-stream_realip_module \
+            --without-select_module \
+    && make \
+    && make install \
+    && touch /usr/local/nginx/logs/access.log \
+    && touch /usr/local/nginx/logs/error.log
+
+
+
+FROM centos:8.2.2004
+
+
+ENV NGINX_VERSION="1.18.0" \
+    PATH="$PATH:/usr/local/nginx/sbin"
+
+COPY --from=build /usr/local/nginx /usr/local/nginx
+
+RUN dnf install -y openssl pcre gd zlib \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && ln -sf /dev/stdout /usr/local/nginx/logs/access.log \
+    && ln -sf /dev/stderr /usr/local/nginx/logs/error.log \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf/*
+
+WORKDIR /usr/local/nginx
+
+EXPOSE 80
+
+STOPSIGNAL SIGTERM
+
+CMD ["nginx", "-g", "daemon off;"]
